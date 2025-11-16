@@ -17,9 +17,9 @@ export default function Redurect() {
     issues.push('Missing "url" url parameter.');
   }
 
-  const delay = delayString === null ? NaN : Number.parseFloat(delayString);
+  let delay = delayString === null ? null : Number.parseFloat(delayString);
 
-  if (isNaN(delay)) {
+  if (delay !== null && isNaN(delay)) {
     issues.push('The argument for "delay" is not a valid number.');
   }
 
@@ -36,6 +36,8 @@ export default function Redurect() {
     );
   }
 
+  delay = delay!;
+
   if (!url?.startsWith('https://')) {
     url = 'https://' + url;
   }
@@ -46,8 +48,6 @@ export default function Redurect() {
   let [progress, setProgress] = useState(0.0);
 
   useEffect(() => {
-    console.log(delay);
-
     const timer = setInterval(() => setProgress(p => {
       const update = p + (timeUnit / 1000);
 
